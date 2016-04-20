@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRollButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                int vowelCounter = 0;
                 randomLetters.clear();
                 String location = mRandomTextView.getText().toString();
                 for(int i=0; i < 8; i++) {
@@ -36,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
                     char c = (char) (r.nextInt(26) + 'a');
                     String myLetter = "" + c;
                     randomLetters.add(myLetter);
+                    if ((myLetter.charAt(0) == 'a') || (myLetter.charAt(0) == 'e')  || (myLetter.charAt(0) == 'i') || (myLetter.charAt(0) == 'o') || (myLetter.charAt(0) == 'u')) {
+                        vowelCounter += 1;
+                    }
                 }
             Log.d(TAG, "" + randomLetters);
+            Log.d(TAG, "int" + vowelCounter);
             }
         });
     }
