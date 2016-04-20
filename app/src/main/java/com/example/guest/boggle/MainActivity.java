@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.rollButton) Button mRollButton;
     @Bind(R.id.randomTextView) TextView mRandomTextView;
+    @Bind(R.id.submitWord) Button mSubmitWord;
+    @Bind(R.id.editText) EditText mEditText;
     public static final String TAG = MainActivity.class.getSimpleName();
     List<String> randomLetters = new ArrayList<String>();
 
@@ -51,11 +54,34 @@ public class MainActivity extends AppCompatActivity {
                 {
                     listRandomLetters += s + "\t";
                 }
-                Log.d(TAG, listRandomLetters);
 
                 Intent intent = getIntent();
                 String myRandomLetters = intent.getStringExtra("myRandomLetters");
                 mRandomTextView.setText(listRandomLetters);
+            }
+        });
+        mSubmitWord.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String listRandomLetters = "";
+                for (String s : randomLetters)
+                {
+                    listRandomLetters += s + "";
+                }
+                List<String> wordList = new ArrayList<String>();
+                wordList.add(listRandomLetters);
+                String userWord = mEditText.getText().toString();
+                if(userWord.length() < 3) {
+                    Toast.makeText(MainActivity.this, "Words Must Be At Least 3 Letters", Toast.LENGTH_LONG).show();
+                } else {
+                    String approvedWord = userWord;
+                    Log.d(TAG, approvedWord);
+                    Log.d(TAG, "" + randomLetters);
+                    if (listRandomLetters.contains(approvedWord)) {
+                        Log.d(TAG, "winner winner!");
+                    } else {
+                        Toast.makeText(MainActivity.this, "Try Again, wrong letters", Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
     }
