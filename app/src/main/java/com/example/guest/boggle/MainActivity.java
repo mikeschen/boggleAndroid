@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +24,11 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.randomTextView) TextView mRandomTextView;
     @Bind(R.id.submitWord) Button mSubmitWord;
     @Bind(R.id.editText) EditText mEditText;
+    @Bind(R.id.wordListView) ListView mWordListView;
     public static final String TAG = MainActivity.class.getSimpleName();
     List<String> randomLetters = new ArrayList<String>();
+    List<String> results = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                 mRandomTextView.setText(listRandomLetters);
             }
         });
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1,results);
+        mWordListView.setAdapter(adapter);
+
         mSubmitWord.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String listRandomLetters = "";
@@ -73,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 if(userWord.length() < 3) {
                     Toast.makeText(MainActivity.this, "Words Must Be At Least 3 Letters", Toast.LENGTH_LONG).show();
                 } else {
-                    String approvedWord = userWord;
-                    Log.d(TAG, approvedWord);
+                    Log.d(TAG, userWord);
                     Log.d(TAG, "" + randomLetters);
-                    if (listRandomLetters.contains(approvedWord)) {
+                    if (listRandomLetters.contains(userWord)) {
                         Log.d(TAG, "winner winner!");
+                        results.add(userWord);
                     } else {
                         Toast.makeText(MainActivity.this, "Try Again, wrong letters", Toast.LENGTH_LONG).show();
                     }
