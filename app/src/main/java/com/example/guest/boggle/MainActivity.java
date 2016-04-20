@@ -20,11 +20,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    @Bind(R.id.rollButton) Button mRollButton;
-    @Bind(R.id.randomTextView) TextView mRandomTextView;
-    @Bind(R.id.submitWord) Button mSubmitWord;
-    @Bind(R.id.editText) EditText mEditText;
-    @Bind(R.id.wordListView) ListView mWordListView;
+    @Bind(R.id.rollButton)
+    Button mRollButton;
+    @Bind(R.id.randomTextView)
+    TextView mRandomTextView;
+    @Bind(R.id.submitWord)
+    Button mSubmitWord;
+    @Bind(R.id.editText)
+    EditText mEditText;
+    @Bind(R.id.wordListView)
+    ListView mWordListView;
     public static final String TAG = MainActivity.class.getSimpleName();
     List<String> randomLetters = new ArrayList<String>();
     List<String> results = new ArrayList<String>();
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mRollButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int vowelCounter = 0;
-                while(vowelCounter < 2) {
+                while (vowelCounter < 2) {
                     vowelCounter = 0;
                     randomLetters.clear();
                     for (int i = 0; i < 8; i++) {
@@ -55,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d(TAG, "" + randomLetters);
 //            Log.d(TAG, "int" + vowelCounter);
                 String listRandomLetters = "";
-                for (String s : randomLetters)
-                {
+                for (String s : randomLetters) {
                     listRandomLetters += s + "\t";
                 }
 
@@ -66,31 +70,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1,results);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, results);
         mWordListView.setAdapter(adapter);
 
         mSubmitWord.setOnClickListener(new View.OnClickListener() {
+
+
             public void onClick(View v) {
+                int trueCounter = 0;
                 String listRandomLetters = "";
-                for (String s : randomLetters)
-                {
+                for (String s : randomLetters) {
                     listRandomLetters += s + "";
                 }
                 List<String> wordList = new ArrayList<String>();
                 wordList.add(listRandomLetters);
                 String userWord = mEditText.getText().toString();
-                if(userWord.length() < 3) {
+                if (userWord.length() < 3) {
                     Toast.makeText(MainActivity.this, "Words Must Be At Least 3 Letters", Toast.LENGTH_LONG).show();
                 } else {
                     Log.d(TAG, userWord);
                     Log.d(TAG, "" + randomLetters);
-                    if (listRandomLetters.contains(userWord)) {
+                    trueCounter = 0;
+                    for (int i = 0; i < userWord.length(); i++) {
+                        for (int j = 0; j < 8; j++) {
+                            char userz = userWord.charAt(i);
+                            char randomz = listRandomLetters.charAt(j);
+                            if (userz == randomz) {
+                                trueCounter++;
+                                Log.d(TAG, "userz " + trueCounter + "");
+                            }
+                        }
+                    }
+                    if (trueCounter == userWord.length()) {
                         Log.d(TAG, "winner winner!");
                         results.add(userWord);
                     } else {
                         Toast.makeText(MainActivity.this, "Try Again, wrong letters", Toast.LENGTH_LONG).show();
                     }
                 }
+
             }
         });
     }
