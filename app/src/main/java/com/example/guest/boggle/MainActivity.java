@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     List<String> randomLetters = new ArrayList<String>();
     List<String> results = new ArrayList<String>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
                         randomLetters.add(myLetter);
                     }
                 }
-//            Log.d(TAG, "" + randomLetters);
-//            Log.d(TAG, "int" + vowelCounter);
                 String listRandomLetters = "";
                 for (String s : randomLetters) {
                     listRandomLetters += s + "\t";
@@ -75,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         mSubmitWord.setOnClickListener(new View.OnClickListener() {
 
-
             public void onClick(View v) {
                 int trueCounter = 0;
                 String listRandomLetters = "";
@@ -86,10 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 wordList.add(listRandomLetters);
                 String userWord = mEditText.getText().toString();
                 if (userWord.length() < 3) {
-                    Toast.makeText(MainActivity.this, "Words Must Be At Least 3 Letters", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Words Must Be At Least 3 Letters!", Toast.LENGTH_LONG).show();
                 } else {
-                    Log.d(TAG, userWord);
-                    Log.d(TAG, "" + randomLetters);
                     trueCounter = 0;
                     for (int i = 0; i < userWord.length(); i++) {
                         for (int j = 0; j < 8; j++) {
@@ -97,15 +91,14 @@ public class MainActivity extends AppCompatActivity {
                             char randomz = listRandomLetters.charAt(j);
                             if (userz == randomz) {
                                 trueCounter++;
-                                Log.d(TAG, "userz " + trueCounter + "");
                             }
                         }
                     }
                     if (trueCounter == userWord.length()) {
-                        Log.d(TAG, "winner winner!");
+                        Toast.makeText(MainActivity.this, "Sweet Word!", Toast.LENGTH_LONG).show();
                         results.add(userWord);
                     } else {
-                        Toast.makeText(MainActivity.this, "Try Again, wrong letters", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Not A Boggle Word!", Toast.LENGTH_LONG).show();
                     }
                 }
 
